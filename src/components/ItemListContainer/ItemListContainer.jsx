@@ -17,7 +17,7 @@ export const ItemListContainer = ({ titulo }) => {
       })
       .then((data) => {
         setProducts(category ? data.filter((p) => p.category === category) : data);
-        //setProducts(data);
+
       })
       .catch((err) => {
         console.log(err);
