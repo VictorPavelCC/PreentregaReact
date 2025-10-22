@@ -19,7 +19,7 @@ export const ItemDetailContainer = () => {
         return res.json();
       })
       .then((data) => {
-        const found = data.find((p) => p.id === id); //Usamos el param para comparar el id del producto en el json
+        const found = data.find((p) => p.id === id);
         if (found) {
           setDetail(found);
         } else {

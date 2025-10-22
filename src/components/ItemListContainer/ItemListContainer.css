@@ -1,0 +1,14 @@
+.item-list-container {
+  display: flex;
+  gap: 20px; 
+  padding: 10px;
+  background-color: #121212; 
+  min-height: 80vh;
+}
+
+
+.item-list-container p {
+  text-align: center;
+  width: 100%;
+  margin-top: 50px;
+}
