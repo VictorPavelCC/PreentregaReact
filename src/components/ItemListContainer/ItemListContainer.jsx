@@ -2,32 +2,45 @@ import { useEffect, useState } from "react";
 import { ItemList } from "../ItemList/ItemList";
 import { useParams } from "react-router-dom";
 import "./ItemListContainer.css";
+import { getProducts } from "../../services/product";
 
-export const ItemListContainer = ({ titulo }) => {
-  const [products, setProducts] = useState([]);
-  const { category } = useParams();
 
-  useEffect(() => {
-    fetch("/data/products.json")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Hubo un problema al buscar productos");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setProducts(category ? data.filter((p) => p.category === category) : data);
+export const ItemListContainer = (/*{}*/) => {
+  const [lista, setLista] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { category } = useParams();  
 
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [category]);
+useEffect(() => {
+  setLoading(true);
+  setError(null);
+
+  getProducts(category)
+    .then((data) => {
+      setLista(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      setError("No se pudieron cargar los productos");
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+}, [category]);
+
+  if (loading || error) {
+  return (
+    <div className="item-list-container">
+      <p>{loading ? 'Cargando productos...' : error}</p>
+    </div>
+  );
+}
+
 
   return (
-    <section className="item-list-container">
-      <h1>{titulo}</h1>
-      <ItemList lista={products} />
-    </section>
-  );
+  <div className="item-list-container">
+    <ItemList lista={lista} />
+  </div>
+);
+
 };

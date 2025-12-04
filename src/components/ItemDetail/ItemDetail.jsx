@@ -1,16 +1,20 @@
+
 import { UseCartContext } from "../../context/CartContext/UseCartContext";
 import { Item } from "../Item/Item";
+import { Count } from "../Count/Count";
 
-export const ItemDetail = ({ detail }) => {
-  const { addItem } = UseCartContext();
 
-  return (
+export const ItemDetail = ({detail}) => {
+        const {addItem} = UseCartContext();
+
+        const handleAdd = (quantity) => {
+            addItem({...detail, quantity})
+        }
+    
+    return (
     <Item {...detail}>
-      <button onClick={()=>{
-        addItem(detail)
-      }}
-      
-      >Enviar al carrito</button>
+        <Count btnText={"Agregar al carrito"} onConfirm={handleAdd} />
+        
     </Item>
-  );
+    );
 };
